@@ -3,6 +3,8 @@ package com.suresell.mscoreapp.infrastructure.web.adapter;
 import com.suresell.mscoreapp.application.usecase.SupplyService;
 import com.suresell.mscoreapp.application.dto.CreateSupplyDto;
 import com.suresell.mscoreapp.application.dto.SupplyDto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/supplies")
+@Tag(name = "Gestión de Insumos (Materia Prima)", description = "Endpoints para el maestro de materia prima y control de inventario base")
 public class SupplyController {
 
     private final SupplyService supplyService;
@@ -21,6 +24,7 @@ public class SupplyController {
     }
 
     @PostMapping
+    @Operation(summary = "Crear nuevo insumo", description = "Registra una nueva materia prima en el maestro de insumos")
     public ResponseEntity<?> createSupply(@RequestBody CreateSupplyDto dto) {
         try {
             supplyService.createSupply(dto);
@@ -32,6 +36,7 @@ public class SupplyController {
     }
 
     @GetMapping
+    @Operation(summary = "Listar todos los insumos", description = "Obtiene el maestro completo de materia prima con sus niveles de stock")
     public ResponseEntity<?> getAllSupplies() {
         try {
             List<SupplyDto> supplies = supplyService.getAllSupplies();
@@ -43,6 +48,7 @@ public class SupplyController {
     }
 
     @GetMapping("/category/{categoryId}")
+    @Operation(summary = "Filtrar por categoría", description = "Obtiene los insumos pertenecientes a una categoría específica")
     public ResponseEntity<?> getSuppliesByCategoryId(@PathVariable("categoryId") Long categoryId) {
         try {
             List<SupplyDto> supplies = supplyService.getSuppliesByCategoryId(categoryId);

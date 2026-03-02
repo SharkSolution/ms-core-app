@@ -30,28 +30,33 @@ public class Supply {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 200)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal price;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal stock;
 
     @ManyToOne
-    @JoinColumn(name = "supplyCategory_id", nullable = false)
+    @JoinColumn(name = "supply_category_id", nullable = false)
     private SupplyCategory supplyCategory;
 
-    @Column(nullable = false)
+    @Column(name = "min_stock", nullable = false, precision = 12, scale = 2)
     private BigDecimal minStock;
 
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
     @PrePersist
     public void prePersist() {
-        this.createdAt = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now();
+        this.createdAt = now;
+        this.updatedAt = now;
     }
 
     @PreUpdate

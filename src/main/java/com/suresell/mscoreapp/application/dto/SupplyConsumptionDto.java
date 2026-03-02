@@ -20,6 +20,4 @@ public class SupplyConsumptionDto {
     private BigDecimal quantity;
     private Reason reason;
     private LocalDateTime registrationDate;
-    private String registeredBy;
-    private String observations;
 }

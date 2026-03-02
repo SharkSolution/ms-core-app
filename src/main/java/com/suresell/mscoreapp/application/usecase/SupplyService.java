@@ -36,7 +36,14 @@ public class SupplyService {
 
     public List<SupplyDto> getAllSupplies() {
         return createSupplyUseCase.findAll().stream()
-                .map(supply -> new SupplyDto(supply.getId(), supply.getName(), supply.getPrice(), supply.getStock(), supply.getMinStock()))
+                .map(supply -> new SupplyDto(
+                        supply.getId(), 
+                        supply.getName(), 
+                        supply.getPrice(), 
+                        supply.getStock(), 
+                        supply.getMinStock(),
+                        supply.getSupplyCategory() != null ? supply.getSupplyCategory().getName() : null
+                ))
                 .collect(Collectors.toList());
     }
 
@@ -44,7 +51,14 @@ public class SupplyService {
         List<Supply> supplies = getSuppliesBySupplyCategoryUseCase.execute(supplyCategoryId);
 
         return supplies.stream()
-                .map(supply -> new SupplyDto(supply.getId(), supply.getName(), supply.getPrice(), supply.getStock(), supply.getMinStock()))
+                .map(supply -> new SupplyDto(
+                        supply.getId(), 
+                        supply.getName(), 
+                        supply.getPrice(), 
+                        supply.getStock(), 
+                        supply.getMinStock(),
+                        supply.getSupplyCategory() != null ? supply.getSupplyCategory().getName() : null
+                ))
                 .collect(Collectors.toList());
     }
 }
