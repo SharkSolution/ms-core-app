@@ -36,7 +36,6 @@ public class ManageShoppingListUseCase {
 
     public ShoppingItem addItem(CreateShoppingItemRequest request) throws Exception {
         ShoppingItem item = new ShoppingItem(
-                UUID.randomUUID().toString(),
                 request.getName(),
                 request.getSupplyCategory(),
                 request.getUnit(),
@@ -46,7 +45,7 @@ public class ManageShoppingListUseCase {
         try{
             return repository.save(item);
         }catch (Exception e) {
-            throw new Exception("www");
+            throw new IllegalArgumentException("Error al guardar el item de la lista de compras.");
         }
     }
 

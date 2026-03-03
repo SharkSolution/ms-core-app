@@ -13,7 +13,7 @@ import org.mapstruct.*;
 public interface ShoppingItemEntityMapper {
 
     @Mapping(target = "id", source = "id")
-    @Mapping(target = "supplyId", source = "supplyId")
+
     @Mapping(target = "name", source = "name")
     @Mapping(target = "supplyCategory", source = "supplyCategory")
     @Mapping(target = "unit", source = "unit")
@@ -27,8 +27,7 @@ public interface ShoppingItemEntityMapper {
     ShoppingItem toDomain(ShoppingItemEntity entity);
 
     @Mapping(target = "id", source = "id")
-    @Mapping(target = "supplyId", source = "supplyId")
-    @Mapping(target = "name", source = "name")
+
     @Mapping(target = "supplyCategory", source = "supplyCategory")
     @Mapping(target = "unit", source = "unit")
     @Mapping(target = "currentStock", source = "currentStock")
@@ -41,6 +40,7 @@ public interface ShoppingItemEntityMapper {
     ShoppingItemEntity toEntity(ShoppingItem domain);
 
     @Mapping(target = "id", ignore = true)
+
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
     void updateEntity(@MappingTarget ShoppingItemEntity entity, ShoppingItem domain);

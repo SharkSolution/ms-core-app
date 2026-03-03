@@ -75,7 +75,7 @@ public class ShoppingListRepositoryImpl implements ShoppingListRepository {
 
     private void updateEntityFields(ShoppingItemEntity entity, ShoppingItem domain) {
         logger.debug("🔧 Actualizando campos de entidad para ID: {}", domain.getId());
-        entity.setSupplyId(domain.getSupplyId());
+
         entity.setName(domain.getName());
         entity.setSupplyCategory(domain.getSupplyCategory());
         entity.setUnit(domain.getUnit());

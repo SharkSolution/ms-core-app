@@ -26,8 +26,7 @@ public class ShoppingItemEntity {
     @Id
     private String id;
 
-    @Column(name = "supply_id", nullable = false)
-    private String supplyId;
+
 
     @Column(name = "name", nullable = false)
     private String name;

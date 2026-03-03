@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ShoppingItem {
     private String id;
-    private String supplyId;
+
     private String name;
     private String supplyCategory;
     private String unit;
@@ -25,10 +25,9 @@ public class ShoppingItem {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public ShoppingItem(String supplyId, String name, String supplyCategory, String unit,
+    public ShoppingItem(String name, String supplyCategory, String unit,
                         BigDecimal currentStock, BigDecimal minimumStock) {
 
-        this.supplyId = supplyId;
         this.name = name;
         this.supplyCategory = supplyCategory;
         this.unit = unit;
