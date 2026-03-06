@@ -20,12 +20,12 @@ public interface AnalyticsRepository extends JpaRepository<Order, Long> {
             "GROUP BY d.closureDate ORDER BY d.closureDate ASC")
     List<SalesTrendDto> getSalesTrend(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
-    @Query("SELECT new com.suresell.mscoreapp.domain.model.analitics.TopProductDto(p.nameProduct, SUM(i.quantity), SUM(i.totalPrice)) " +
+    @Query("SELECT new com.suresell.mscoreapp.domain.model.analitics.TopProductDto(p.name, SUM(i.quantity), SUM(i.totalPrice)) " +
             "FROM OrderItem i " +
             "JOIN i.order o " +
-            "JOIN MenuProduct p ON i.productId = p.idProduct " +
+            "JOIN MenuProductEntity p ON i.productId = p.id " +
             "WHERE o.createdAt BETWEEN :startDateTime AND :endDateTime " +
-            "GROUP BY p.nameProduct ORDER BY SUM(i.totalPrice) DESC")
+            "GROUP BY p.name ORDER BY SUM(i.totalPrice) DESC")
     List<TopProductDto> getTopProducts(@Param("startDateTime") LocalDateTime start, @Param("endDateTime") LocalDateTime end, org.springframework.data.domain.Pageable pageable);
 
     @Query("SELECT new com.suresell.mscoreapp.domain.model.analitics.PaymentMethodDistDto(o.paymentMethod, COUNT(o), SUM(o.total)) " +
