@@ -14,10 +14,10 @@ import java.util.List;
 
 public interface AnalyticsRepository extends JpaRepository<Order, Long> {
 
-    @Query("SELECT new com.suresell.mscoreapp.domain.model.analitics.SalesTrendDto(d.closureDate, SUM(d.totalExpected)) " +
-            "FROM DailyClosure d " +
-            "WHERE d.closureDate BETWEEN :startDate AND :endDate " +
-            "GROUP BY d.closureDate ORDER BY d.closureDate ASC")
+    @Query("SELECT new com.suresell.mscoreapp.domain.model.analitics.SalesTrendDto(CAST(d.closingTime AS LocalDate), SUM(d.totalExpectedCash)) " +
+            "FROM DailyClosureEntity d " +
+            "WHERE CAST(d.closingTime AS LocalDate) BETWEEN :startDate AND :endDate " +
+            "GROUP BY CAST(d.closingTime AS LocalDate) ORDER BY CAST(d.closingTime AS LocalDate) ASC")
     List<SalesTrendDto> getSalesTrend(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
     @Query("SELECT new com.suresell.mscoreapp.domain.model.analitics.TopProductDto(p.name, SUM(i.quantity), SUM(i.totalPrice)) " +
@@ -34,10 +34,10 @@ public interface AnalyticsRepository extends JpaRepository<Order, Long> {
             "GROUP BY o.paymentMethod")
     List<PaymentMethodDistDto> getPaymentMethodDistribution(@Param("startDateTime") LocalDateTime start, @Param("endDateTime") LocalDateTime end);
 
-    @Query("SELECT new com.suresell.mscoreapp.domain.model.analitics.CashPerformanceDto(d.closureDate, d.totalDifference, d.userName) " +
-            "FROM DailyClosure d " +
-            "WHERE d.closureDate BETWEEN :startDate AND :endDate " +
-            "ORDER BY d.closureDate DESC")
+    @Query("SELECT new com.suresell.mscoreapp.domain.model.analitics.CashPerformanceDto(CAST(d.closingTime AS LocalDate), d.differenceAmount, d.userName) " +
+            "FROM DailyClosureEntity d " +
+            "WHERE CAST(d.closingTime AS LocalDate) BETWEEN :startDate AND :endDate " +
+            "ORDER BY d.closingTime DESC")
     List<CashPerformanceDto> getCashPerformance(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
     @Query(value = "SELECT EXTRACT(HOUR FROM created_at) as hora, COUNT(id_order) as cantidad " +
