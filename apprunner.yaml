@@ -1,0 +1,10 @@
+version: 1.0
+runtime: corretto17
+build:
+  commands:
+    build:
+      - ./mvnw clean package -DskipTests
+run:
+  command: java -jar target/*.jar
+  network:
+    port: 3000
