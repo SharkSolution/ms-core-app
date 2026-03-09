@@ -9,8 +9,8 @@ import java.math.BigDecimal;
 @Setter
 public class CreateShoppingItemRequest {
     private String name;
-    private String supplyCategory;
+    private Object categoryId;
     private String unit;
     private BigDecimal currentStock;
-    private BigDecimal minimumStock;
+    private BigDecimal minStock;
 }

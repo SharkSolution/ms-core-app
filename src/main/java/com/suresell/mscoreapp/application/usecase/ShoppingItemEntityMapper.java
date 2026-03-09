@@ -27,7 +27,7 @@ public interface ShoppingItemEntityMapper {
     ShoppingItem toDomain(ShoppingItemEntity entity);
 
     @Mapping(target = "id", source = "id")
-
+    @Mapping(target = "name", source = "name")
     @Mapping(target = "supplyCategory", source = "supplyCategory")
     @Mapping(target = "unit", source = "unit")
     @Mapping(target = "currentStock", source = "currentStock")
@@ -40,7 +40,14 @@ public interface ShoppingItemEntityMapper {
     ShoppingItemEntity toEntity(ShoppingItem domain);
 
     @Mapping(target = "id", ignore = true)
-
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "supplyCategory", source = "supplyCategory")
+    @Mapping(target = "unit", source = "unit")
+    @Mapping(target = "currentStock", source = "currentStock")
+    @Mapping(target = "minimumStock", source = "minimumStock")
+    @Mapping(target = "suggestedQuantity", source = "suggestedQuantity")
+    @Mapping(target = "estimatedCost", source = "estimatedCost")
+    @Mapping(target = "status", source = "status")
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())")
     void updateEntity(@MappingTarget ShoppingItemEntity entity, ShoppingItem domain);

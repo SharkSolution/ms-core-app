@@ -31,7 +31,7 @@ public class ShoppingItemEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "supplyCategory")
+    @Column(name = "supply_category")
     private String supplyCategory;
 
     @Column(name = "unit")
