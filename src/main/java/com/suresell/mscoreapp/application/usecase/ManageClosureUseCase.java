@@ -29,6 +29,13 @@ public class ManageClosureUseCase {
     }
 
     @Transactional(readOnly = true)
+    public ClosureResponse getClosureById(java.util.UUID id) {
+        return repository.findById(id)
+                .map(mapper::toResponse)
+                .orElseThrow(() -> new IllegalArgumentException("No se encontró el cierre con ID: " + id));
+    }
+
+    @Transactional(readOnly = true)
     public byte[] exportToExcel() throws IOException {
         List<DailyClosureEntity> closures = repository.findAllOrderByClosingTimeDesc();
         

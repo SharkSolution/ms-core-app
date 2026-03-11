@@ -31,6 +31,12 @@ public class ClosureController {
         return manageClosureUseCase.getClosureHistory();
     }
 
+    @GetMapping("/{id}")
+    @Operation(summary = "Buscar un cierre de caja por su ID (UUID)")
+    public ResponseEntity<ClosureResponse> getClosureById(@org.springframework.web.bind.annotation.PathVariable java.util.UUID id) {
+        return ResponseEntity.ok(manageClosureUseCase.getClosureById(id));
+    }
+
     @GetMapping("/export/excel")
     @Operation(summary = "Exportar historial de cierres a Excel")
     public ResponseEntity<byte[]> exportToExcel() throws IOException {

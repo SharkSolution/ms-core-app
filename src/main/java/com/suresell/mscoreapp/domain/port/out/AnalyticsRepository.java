@@ -8,6 +8,8 @@ import com.suresell.mscoreapp.domain.model.analitics.TopProductDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.List;
 public interface AnalyticsRepository extends JpaRepository<Order, Long> {
 
     @Query("SELECT new com.suresell.mscoreapp.domain.model.analitics.SalesTrendDto(d.closureDate, SUM(d.totalExpected)) " +
-            "FROM DailyClosure d " +
+            "FROM DailyClosureEntity d " +
             "WHERE d.closureDate BETWEEN :startDate AND :endDate " +
             "GROUP BY d.closureDate ORDER BY d.closureDate ASC")
     List<SalesTrendDto> getSalesTrend(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
@@ -35,16 +37,26 @@ public interface AnalyticsRepository extends JpaRepository<Order, Long> {
     List<PaymentMethodDistDto> getPaymentMethodDistribution(@Param("startDateTime") LocalDateTime start, @Param("endDateTime") LocalDateTime end);
 
     @Query("SELECT new com.suresell.mscoreapp.domain.model.analitics.CashPerformanceDto(d.closureDate, d.totalDifference, d.userName) " +
-            "FROM DailyClosure d " +
+            "FROM DailyClosureEntity d " +
             "WHERE d.closureDate BETWEEN :startDate AND :endDate " +
             "ORDER BY d.closureDate DESC")
     List<CashPerformanceDto> getCashPerformance(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
-    @Query(value = "SELECT EXTRACT(HOUR FROM created_at) as hora, COUNT(id_order) as cantidad " +
-            "FROM orders " +
-            "WHERE created_at BETWEEN :startDateTime AND :endDateTime " +
-            "GROUP BY EXTRACT(HOUR FROM created_at) " +
-            "ORDER BY hora ASC",
-            nativeQuery = true)
-    List<Object[]> getPeakHoursRaw(@Param("startDateTime") LocalDateTime start, @Param("endDateTime") LocalDateTime end);
-}
+        @Query(value = "SELECT EXTRACT(HOUR FROM created_at) as hora, COUNT(id_order) as cantidad " +
+                "FROM orders " +
+                "WHERE created_at BETWEEN :startDateTime AND :endDateTime " +
+                "GROUP BY EXTRACT(HOUR FROM created_at) " +
+                "ORDER BY hora ASC",
+                nativeQuery = true)
+        List<Object[]> getPeakHoursRaw(@Param("startDateTime") LocalDateTime start, @Param("endDateTime") LocalDateTime end);
+    
+        @Query("SELECT COALESCE(SUM(o.total), 0) FROM Order o WHERE o.createdAt BETWEEN :start AND :end")
+        BigDecimal getTotalSalesToday(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+    
+        @Query("SELECT COUNT(o) FROM Order o WHERE o.createdAt BETWEEN :start AND :end")
+        Long getTotalOrdersToday(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+    
+        @Query("SELECT COUNT(sc) FROM SupplyConsumptionEntity sc WHERE sc.registrationDate BETWEEN :start AND :end")
+        Long getInventoryConsumptionToday(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+    }
+    

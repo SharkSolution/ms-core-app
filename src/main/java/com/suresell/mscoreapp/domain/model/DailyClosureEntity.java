@@ -17,7 +17,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "daily_closure")
+@Table(name = "daily_closures")
 public class DailyClosureEntity {
 
     @Id
