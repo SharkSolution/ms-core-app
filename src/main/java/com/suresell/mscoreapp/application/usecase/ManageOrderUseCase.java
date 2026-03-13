@@ -1,7 +1,10 @@
 package com.suresell.mscoreapp.application.usecase;
 
+import com.suresell.mscoreapp.application.dto.OrderItemDto;
 import com.suresell.mscoreapp.application.dto.OrderResponse;
+import com.suresell.mscoreapp.domain.model.MenuProductEntity;
 import com.suresell.mscoreapp.domain.model.Order;
+import com.suresell.mscoreapp.domain.port.out.MenuProductRepository;
 import com.suresell.mscoreapp.domain.port.out.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,13 +15,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.criteria.Predicate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class ManageOrderUseCase {
 
     private final OrderRepository orderRepository;
+    private final MenuProductRepository productRepository;
     private final OrderMapper orderMapper;
 
     @Transactional(readOnly = true)
@@ -39,6 +45,27 @@ public class ManageOrderUseCase {
             return cb.and(predicates.toArray(new Predicate[0]));
         };
         
-        return orderRepository.findAll(spec, pageable).map(orderMapper::toResponse);
+        Page<OrderResponse> responsePage = orderRepository.findAll(spec, pageable).map(orderMapper::toResponse);
+        
+        // Cache temporal de nombres de productos para esta página
+        Map<String, String> productNames = new HashMap<>();
+        
+        responsePage.forEach(order -> {
+            if (order.getItems() != null) {
+                order.getItems().forEach(item -> {
+                    String id = item.getProductId();
+                    if (id != null) {
+                        String name = productNames.computeIfAbsent(id, pid -> 
+                            productRepository.findById(pid)
+                                .map(MenuProductEntity::getName)
+                                .orElse("Producto desconocido")
+                        );
+                        item.setProductName(name);
+                    }
+                });
+            }
+        });
+        
+        return responsePage;
     }
 }

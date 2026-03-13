@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+
 @Entity
 @Table(name = "orders")  
 @Data
@@ -40,6 +41,10 @@ public class Order {
     private BigDecimal discountAmount;
     @Column(name = "synced", nullable = false)
     private Boolean synced = false;
+    @Column(name = "uuid_id")
+    private java.util.UUID uuidId;
+    @Column(name = "is_printed")
+    private Boolean isPrinted;
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)  
     private List<OrderItem> items;
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
