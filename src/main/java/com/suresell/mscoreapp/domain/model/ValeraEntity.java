@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Table(name = "valeras",
         indexes = {
-                @Index(name = "idx_valera_code", columnList = "code", unique = true),
                 @Index(name = "idx_valera_customer", columnList = "customer_document"),
                 @Index(name = "idx_valera_status", columnList = "status"),
                 @Index(name = "idx_valera_expiration", columnList = "expiration_date"),

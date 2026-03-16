@@ -49,11 +49,17 @@ public class AnalyticsController {
         return ResponseEntity.ok(analyticsUseCase.getCashPerformance(startDate, endDate));
     }
 
-    @GetMapping("/peak-hours")
-    public ResponseEntity<List<PeakHourDto>> getPeakHours(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
-
-        return ResponseEntity.ok(analyticsUseCase.getPeakHours(startDate, endDate));
+        @GetMapping("/peak-hours")
+        public ResponseEntity<List<PeakHourDto>> getPeakHours(
+                @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+    
+            return ResponseEntity.ok(analyticsUseCase.getPeakHours(startDate, endDate));
+        }
+    
+        @GetMapping("/dashboard")
+        public ResponseEntity<DashboardResponse> getDashboard() {
+            return ResponseEntity.ok(analyticsUseCase.getDashboardMetrics());
+        }
     }
-}
+    

@@ -51,15 +51,30 @@ public class ShoppingListService {
     }
 
     private void validateRequest(CreateShoppingItemRequest request) {
+        if (request == null) {
+            throw new IllegalArgumentException("Request body is required");
+        }
         if (request.getName() == null || request.getName().trim().isEmpty()) {
             throw new IllegalArgumentException("Item name is required");
+        }
+        if (request.getCurrentStock() == null) {
+            throw new IllegalArgumentException("Current stock is required");
+        }
+        if (request.getMinStock() == null) {
+            throw new IllegalArgumentException("Minimum stock is required");
         }
         if (request.getCurrentStock().compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("Current stock cannot be negative");
         }
+        if (request.getMinStock().compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Minimum stock cannot be negative");
+        }
     }
 
     private void validateQuantity(BigDecimal quantity) {
+        if (quantity == null) {
+            throw new IllegalArgumentException("Quantity is required");
+        }
         if (quantity.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Quantity must be positive");
         }

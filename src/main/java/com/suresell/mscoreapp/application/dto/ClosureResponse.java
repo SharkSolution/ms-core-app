@@ -27,11 +27,16 @@ public class ClosureResponse {
     // Totales Contados
     private BigDecimal totalCountedCash;
     private BigDecimal totalCountedCard;
-    private BigDecimal totalCountedNequi;
-    private BigDecimal totalCountedQr;
+        private BigDecimal totalCountedNequi;
+        private BigDecimal totalCountedQr;
     
-    private BigDecimal differenceAmount;
-    private ClosureStatus status;
+        // Totales Consolidados
+        private BigDecimal totalExpected;
+        private BigDecimal totalCounted;
+    
+        private BigDecimal differenceAmount;
+        private ClosureStatus status;
+    
     private String notes;
     private BigDecimal baseBalanceForNextDay;
 }

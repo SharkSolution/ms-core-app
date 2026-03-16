@@ -12,9 +12,13 @@ public class OrderDeliveryTracking {
     @Id
     @Column(name = "order_id")
     private Long orderId;
+
+    @Column(name = "order_id_uuid")
+    private java.util.UUID orderIdUuid;
+
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "order_id", referencedColumnName = "id_order")
     @ToString.Exclude
     private Order order;
         @Column(name = "delivered", nullable = false)

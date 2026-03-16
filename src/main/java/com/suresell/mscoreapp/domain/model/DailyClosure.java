@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.UUID;
 
-@Entity
 @Table(name = "daily_closures")
 @Data
 @NoArgsConstructor
