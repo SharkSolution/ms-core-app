@@ -4,7 +4,7 @@ FROM eclipse-temurin:17-jre
 WORKDIR /app
 
 # Copiar el JAR genérico (excluyendo el -plain.jar)
-COPY build/libs/[^p]*.jar app.jar
+COPY build/libs/*SNAPSHOT.jar app.jar
 
 # Exponer el puerto
 EXPOSE 8083
