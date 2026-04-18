@@ -1,8 +1,7 @@
 package com.suresell.mscoreapp.application.usecase;
 
-import com.suresell.mscoreapp.application.usecase.ManageShoppingListUseCase;
-import com.suresell.mscoreapp.application.dto.ShoppingItem;
 import com.suresell.mscoreapp.application.dto.CreateShoppingItemRequest;
+import com.suresell.mscoreapp.application.dto.ShoppingItem;
 import com.suresell.mscoreapp.application.dto.ShoppingListResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

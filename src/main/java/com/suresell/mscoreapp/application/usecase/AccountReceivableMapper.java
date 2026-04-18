@@ -1,10 +1,13 @@
 package com.suresell.mscoreapp.application.usecase;
 
 import com.suresell.mscoreapp.application.dto.AccountReceivable;
-import com.suresell.mscoreapp.application.dto.DebtTransaction;
 import com.suresell.mscoreapp.application.dto.AccountReceivableDto;
+import com.suresell.mscoreapp.application.dto.DebtTransaction;
 import com.suresell.mscoreapp.application.dto.DebtTransactionDto;
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
 @Mapper(

@@ -2,8 +2,8 @@ package com.suresell.mscoreapp.application.usecase;
 
 
 import com.suresell.mscoreapp.application.dto.ShoppingItem;
-import com.suresell.mscoreapp.domain.model.ShoppingItemEntity;
 import com.suresell.mscoreapp.application.dto.ShoppingListResponse;
+import com.suresell.mscoreapp.domain.model.ShoppingItemEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 

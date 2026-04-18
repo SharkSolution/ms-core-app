@@ -1,9 +1,9 @@
 package com.suresell.mscoreapp.application.dto;
 
+import com.suresell.mscoreapp.shared.enums.ShoppingItemStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import com.suresell.mscoreapp.shared.enums.ShoppingItemStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

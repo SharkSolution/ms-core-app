@@ -1,12 +1,12 @@
 package com.suresell.mscoreapp.infrastructure.persistence;
 
-import com.suresell.mscoreapp.application.usecase.ValeraEntityMapper;
 import com.suresell.mscoreapp.application.dto.Valera;
-import com.suresell.mscoreapp.shared.enums.ValeraStatus;
-import com.suresell.mscoreapp.shared.enums.ValeraType;
+import com.suresell.mscoreapp.application.usecase.ValeraEntityMapper;
 import com.suresell.mscoreapp.domain.model.ValeraEntity;
 import com.suresell.mscoreapp.domain.port.out.ValeraRepository;
 import com.suresell.mscoreapp.infrastructure.persistence.jpa.ValeraPanacheRepository;
+import com.suresell.mscoreapp.shared.enums.ValeraStatus;
+import com.suresell.mscoreapp.shared.enums.ValeraType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;

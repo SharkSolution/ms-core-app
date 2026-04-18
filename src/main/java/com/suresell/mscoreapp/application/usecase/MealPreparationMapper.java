@@ -1,9 +1,9 @@
 package com.suresell.mscoreapp.application.usecase;
 
-import com.suresell.mscoreapp.application.dto.MealPreparation;
 import com.suresell.mscoreapp.application.dto.CreateMealPreparationRequest;
-import com.suresell.mscoreapp.application.dto.WeeklyMealPlanResponse;
+import com.suresell.mscoreapp.application.dto.MealPreparation;
 import com.suresell.mscoreapp.application.dto.MealPreparationDto;
+import com.suresell.mscoreapp.application.dto.WeeklyMealPlanResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;

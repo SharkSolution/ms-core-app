@@ -1,10 +1,8 @@
 package com.suresell.mscoreapp.application.usecase;
 
-import com.suresell.mscoreapp.application.usecase.CreateSupplyUseCase;
-import com.suresell.mscoreapp.application.usecase.GetSuppliesByCategoryUseCase;
-import com.suresell.mscoreapp.domain.model.Supply;
 import com.suresell.mscoreapp.application.dto.CreateSupplyDto;
 import com.suresell.mscoreapp.application.dto.SupplyDto;
+import com.suresell.mscoreapp.domain.model.Supply;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

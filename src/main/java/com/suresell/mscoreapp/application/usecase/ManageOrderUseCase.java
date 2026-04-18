@@ -1,11 +1,11 @@
 package com.suresell.mscoreapp.application.usecase;
 
-import com.suresell.mscoreapp.application.dto.OrderItemDto;
 import com.suresell.mscoreapp.application.dto.OrderResponse;
 import com.suresell.mscoreapp.domain.model.MenuProductEntity;
 import com.suresell.mscoreapp.domain.model.Order;
 import com.suresell.mscoreapp.domain.port.out.MenuProductRepository;
 import com.suresell.mscoreapp.domain.port.out.OrderRepository;
+import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +13,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

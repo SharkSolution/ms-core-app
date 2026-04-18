@@ -1,7 +1,7 @@
 package com.suresell.mscoreapp.infrastructure.web.adapter;
 
-import com.suresell.mscoreapp.application.usecase.SupplyConsumptionService;
 import com.suresell.mscoreapp.application.dto.SupplyConsumptionDto;
+import com.suresell.mscoreapp.application.usecase.SupplyConsumptionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;

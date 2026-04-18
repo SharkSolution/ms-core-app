@@ -1,13 +1,8 @@
 package com.suresell.mscoreapp.infrastructure.web.adapter;
 
-import jakarta.validation.Valid;
+import com.suresell.mscoreapp.application.dto.*;
 import com.suresell.mscoreapp.application.usecase.ValeraService;
-import com.suresell.mscoreapp.application.dto.Valera;
-import com.suresell.mscoreapp.application.dto.CreateValeraRequest;
-import com.suresell.mscoreapp.application.dto.UseMealRequest;
-import com.suresell.mscoreapp.application.dto.CustomerValerasResponse;
-import com.suresell.mscoreapp.application.dto.ValeraStatsResponse;
-import com.suresell.mscoreapp.application.dto.ValeraDto;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

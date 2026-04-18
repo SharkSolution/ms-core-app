@@ -1,13 +1,11 @@
 package com.suresell.mscoreapp.application.dto;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.NoArgsConstructor;
-import com.suresell.mscoreapp.application.dto.DayOfWeek;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Getter
 @Setter

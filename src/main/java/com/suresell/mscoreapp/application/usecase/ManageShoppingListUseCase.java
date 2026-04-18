@@ -1,13 +1,12 @@
 package com.suresell.mscoreapp.application.usecase;
 
-import com.suresell.mscoreapp.application.usecase.ShoppingListMapper;
-import com.suresell.mscoreapp.application.dto.ShoppingItem;
-import com.suresell.mscoreapp.shared.enums.ShoppingItemStatus;
-import com.suresell.mscoreapp.domain.port.out.ShoppingListRepository;
 import com.suresell.mscoreapp.application.dto.CreateShoppingItemRequest;
+import com.suresell.mscoreapp.application.dto.ShoppingItem;
 import com.suresell.mscoreapp.application.dto.ShoppingListResponse;
-import com.suresell.mscoreapp.domain.port.out.ISupplyCategoryRepository;
 import com.suresell.mscoreapp.domain.model.SupplyCategory;
+import com.suresell.mscoreapp.domain.port.out.ISupplyCategoryRepository;
+import com.suresell.mscoreapp.domain.port.out.ShoppingListRepository;
+import com.suresell.mscoreapp.shared.enums.ShoppingItemStatus;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
