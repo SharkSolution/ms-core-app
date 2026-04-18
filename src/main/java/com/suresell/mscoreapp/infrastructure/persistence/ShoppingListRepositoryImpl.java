@@ -1,11 +1,11 @@
 package com.suresell.mscoreapp.infrastructure.persistence;
 
-import com.suresell.mscoreapp.application.usecase.ShoppingItemEntityMapper;
 import com.suresell.mscoreapp.application.dto.ShoppingItem;
-import com.suresell.mscoreapp.shared.enums.ShoppingItemStatus;
+import com.suresell.mscoreapp.application.usecase.ShoppingItemEntityMapper;
 import com.suresell.mscoreapp.domain.model.ShoppingItemEntity;
 import com.suresell.mscoreapp.domain.port.out.ShoppingListRepository;
 import com.suresell.mscoreapp.infrastructure.persistence.jpa.ShoppingListPanacheRepository;
+import com.suresell.mscoreapp.shared.enums.ShoppingItemStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;

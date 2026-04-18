@@ -1,10 +1,10 @@
 package com.suresell.mscoreapp.application.dto;
 
+import com.suresell.mscoreapp.shared.enums.ValeraStatus;
+import com.suresell.mscoreapp.shared.enums.ValeraType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import com.suresell.mscoreapp.shared.enums.ValeraStatus;
-import com.suresell.mscoreapp.shared.enums.ValeraType;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

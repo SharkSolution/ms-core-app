@@ -1,7 +1,5 @@
 package com.suresell.mscoreapp.application.usecase;
 
-import com.suresell.mscoreapp.application.usecase.SupplyConsumptionMapper;
-import com.suresell.mscoreapp.application.usecase.ManageSupplyConsumptionUseCase;
 import com.suresell.mscoreapp.application.dto.SupplyConsumptionDto;
 import com.suresell.mscoreapp.domain.model.SupplyConsumptionEntity;
 import com.suresell.mscoreapp.domain.port.out.ISupplyConsumptionRepository;

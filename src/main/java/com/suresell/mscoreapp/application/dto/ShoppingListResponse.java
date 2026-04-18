@@ -2,7 +2,6 @@ package com.suresell.mscoreapp.application.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import com.suresell.mscoreapp.application.dto.ShoppingItem;
 
 import java.math.BigDecimal;
 import java.util.List;

@@ -1,11 +1,11 @@
 package com.suresell.mscoreapp.domain.model;
 
+import com.suresell.mscoreapp.shared.enums.AccountStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import com.suresell.mscoreapp.shared.enums.AccountStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

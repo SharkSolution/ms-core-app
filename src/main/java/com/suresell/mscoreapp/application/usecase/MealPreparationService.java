@@ -1,8 +1,7 @@
 package com.suresell.mscoreapp.application.usecase;
 
-import com.suresell.mscoreapp.application.usecase.ManageMealPreparationUseCase;
-import com.suresell.mscoreapp.application.dto.MealPreparation;
 import com.suresell.mscoreapp.application.dto.CreateMealPreparationRequest;
+import com.suresell.mscoreapp.application.dto.MealPreparation;
 import com.suresell.mscoreapp.application.dto.UpdateMealPreparationRequest;
 import com.suresell.mscoreapp.application.dto.WeeklyMealPlanResponse;
 import org.slf4j.Logger;

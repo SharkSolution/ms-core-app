@@ -1,7 +1,7 @@
 package com.suresell.mscoreapp.infrastructure.persistence.jpa;
 
-import com.suresell.mscoreapp.shared.enums.AccountStatus;
 import com.suresell.mscoreapp.domain.model.AccountReceivableEntity;
+import com.suresell.mscoreapp.shared.enums.AccountStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

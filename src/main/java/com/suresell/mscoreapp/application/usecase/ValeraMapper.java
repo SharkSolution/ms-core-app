@@ -1,7 +1,7 @@
 package com.suresell.mscoreapp.application.usecase;
 
-import com.suresell.mscoreapp.application.dto.Valera;
 import com.suresell.mscoreapp.application.dto.CustomerValerasResponse;
+import com.suresell.mscoreapp.application.dto.Valera;
 import com.suresell.mscoreapp.application.dto.ValeraDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

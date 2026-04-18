@@ -1,7 +1,7 @@
 package com.suresell.mscoreapp.infrastructure.persistence.jpa;
 
-import com.suresell.mscoreapp.domain.model.MealPreparationEntity;
 import com.suresell.mscoreapp.application.dto.DayOfWeek;
+import com.suresell.mscoreapp.domain.model.MealPreparationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

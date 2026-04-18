@@ -1,14 +1,8 @@
 package com.suresell.mscoreapp.application.usecase;
 
-import com.suresell.mscoreapp.application.usecase.ManageValeraUseCase;
-import com.suresell.mscoreapp.application.dto.Valera;
+import com.suresell.mscoreapp.application.dto.*;
 import com.suresell.mscoreapp.shared.enums.ValeraStatus;
 import com.suresell.mscoreapp.shared.enums.ValeraType;
-import com.suresell.mscoreapp.application.dto.CreateValeraRequest;
-import com.suresell.mscoreapp.application.dto.UseMealRequest;
-import com.suresell.mscoreapp.application.dto.CustomerValerasResponse;
-import com.suresell.mscoreapp.application.dto.ValeraStatsResponse;
-import com.suresell.mscoreapp.application.dto.ValeraDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

@@ -1,11 +1,8 @@
 package com.suresell.mscoreapp.application.usecase;
 
-import com.suresell.mscoreapp.application.usecase.SupplyCategoryEntityMapper;
-import com.suresell.mscoreapp.application.usecase.CreateSupplyCategoryUseCase;
-import com.suresell.mscoreapp.application.usecase.GetAllSupplyCategoriesUseCase;
+import com.suresell.mscoreapp.application.dto.CreateSupplyCategoryDto;
 import com.suresell.mscoreapp.application.dto.SupplyCategoryDto;
 import com.suresell.mscoreapp.domain.model.SupplyCategory;
-import com.suresell.mscoreapp.application.dto.CreateSupplyCategoryDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

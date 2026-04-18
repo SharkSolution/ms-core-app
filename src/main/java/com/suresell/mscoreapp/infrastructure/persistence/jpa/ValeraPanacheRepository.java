@@ -1,10 +1,9 @@
 package com.suresell.mscoreapp.infrastructure.persistence.jpa;
 
+import com.suresell.mscoreapp.domain.model.ValeraEntity;
 import com.suresell.mscoreapp.shared.enums.ValeraStatus;
 import com.suresell.mscoreapp.shared.enums.ValeraType;
-import com.suresell.mscoreapp.domain.model.ValeraEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;

@@ -2,13 +2,13 @@ package com.suresell.mscoreapp.infrastructure.persistence;
 
 import com.suresell.mscoreapp.application.dto.AccountReceivable;
 import com.suresell.mscoreapp.application.dto.DebtTransaction;
-import com.suresell.mscoreapp.shared.enums.AccountStatus;
+import com.suresell.mscoreapp.application.usecase.AccountReceivableEntityMapper;
 import com.suresell.mscoreapp.domain.model.AccountReceivableEntity;
 import com.suresell.mscoreapp.domain.model.DebtTransactionEntity;
 import com.suresell.mscoreapp.domain.port.out.AccountReceivableRepository;
 import com.suresell.mscoreapp.infrastructure.persistence.jpa.AccountReceivablePanacheRepository;
 import com.suresell.mscoreapp.infrastructure.persistence.jpa.DebtTransactionPanacheRepository;
-import com.suresell.mscoreapp.application.usecase.AccountReceivableEntityMapper;
+import com.suresell.mscoreapp.shared.enums.AccountStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;

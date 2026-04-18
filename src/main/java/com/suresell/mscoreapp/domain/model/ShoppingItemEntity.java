@@ -1,17 +1,12 @@
 package com.suresell.mscoreapp.domain.model;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.suresell.mscoreapp.shared.enums.ShoppingItemStatus;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import com.suresell.mscoreapp.shared.enums.ShoppingItemStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

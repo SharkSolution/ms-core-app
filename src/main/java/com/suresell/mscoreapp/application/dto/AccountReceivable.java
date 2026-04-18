@@ -1,9 +1,9 @@
 package com.suresell.mscoreapp.application.dto;
 
-import lombok.Getter;
-import lombok.Setter;
 import com.suresell.mscoreapp.shared.enums.AccountStatus;
 import com.suresell.mscoreapp.shared.enums.PaymentMethod;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

@@ -1,7 +1,7 @@
 package com.suresell.mscoreapp.domain.port.out;
 
-import com.suresell.mscoreapp.application.dto.MealPreparation;
 import com.suresell.mscoreapp.application.dto.DayOfWeek;
+import com.suresell.mscoreapp.application.dto.MealPreparation;
 
 import java.time.LocalDate;
 import java.util.List;

@@ -1,11 +1,11 @@
 package com.suresell.mscoreapp.domain.model;
 
+import com.suresell.mscoreapp.application.dto.DayOfWeek;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import com.suresell.mscoreapp.application.dto.DayOfWeek;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
