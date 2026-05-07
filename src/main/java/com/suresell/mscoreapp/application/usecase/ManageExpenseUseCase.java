@@ -147,23 +147,37 @@ public class ManageExpenseUseCase {
         expenseRepository.deleteById(id);
     }
 
-    public ExpenseStatsResponse getExpenseStats() {
-        List<ExpenseEntity> allExpenses = expenseRepository.findAll();
+    public ExpenseStatsResponse getExpenseStats(LocalDate startDate, LocalDate endDate) {
+        List<ExpenseEntity> expenses;
+        List<ExpenseEntity> pendingExpenses;
+        List<ExpenseEntity> approvedExpenses;
+        long rejectedCount;
+        
+        if (startDate != null && endDate != null) {
+            expenses = expenseRepository.findByExpenseDateBetween(startDate, endDate);
+            pendingExpenses = expenseRepository.findByStatusAndExpenseDateBetween(ExpenseStatus.PENDING, startDate, endDate);
+            approvedExpenses = expenseRepository.findByStatusAndExpenseDateBetween(ExpenseStatus.APPROVED, startDate, endDate);
+            rejectedCount = expenseRepository.findByStatusAndExpenseDateBetween(ExpenseStatus.REJECTED, startDate, endDate).size();
+        } else {
+            expenses = expenseRepository.findAll();
+            pendingExpenses = expenseRepository.findByStatus(ExpenseStatus.PENDING);
+            approvedExpenses = expenseRepository.findByStatus(ExpenseStatus.APPROVED);
+            rejectedCount = expenseRepository.countByStatus(ExpenseStatus.REJECTED);
+        }
 
-        long totalExpenses = allExpenses.size();
-        long pendingCount = expenseRepository.countByStatus(ExpenseStatus.PENDING);
-        long approvedCount = expenseRepository.countByStatus(ExpenseStatus.APPROVED);
-        long rejectedCount = expenseRepository.countByStatus(ExpenseStatus.REJECTED);
+        long totalExpenses = expenses.size();
+        long pendingCount = pendingExpenses.size();
+        long approvedCount = approvedExpenses.size();
 
-        BigDecimal totalAmount = allExpenses.stream()
+        BigDecimal totalAmount = expenses.stream()
                 .map(ExpenseEntity::getAmount)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        BigDecimal approvedAmount = expenseRepository.findByStatus(ExpenseStatus.APPROVED).stream()
+        BigDecimal approvedAmount = approvedExpenses.stream()
                 .map(ExpenseEntity::getAmount)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        BigDecimal pendingAmount = expenseRepository.findByStatus(ExpenseStatus.PENDING).stream()
+        BigDecimal pendingAmount = pendingExpenses.stream()
                 .map(ExpenseEntity::getAmount)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 

@@ -147,9 +147,11 @@ public class ExpenseController {
 
     @GetMapping("/stats")
     @Operation(summary = "Estadísticas de gastos", description = "Obtiene estadísticas generales de gastos")
-    public ResponseEntity<?> getExpenseStats() {
+    public ResponseEntity<?> getExpenseStats(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
         try {
-            ExpenseStatsResponse stats = useCase.getExpenseStats();
+            ExpenseStatsResponse stats = useCase.getExpenseStats(startDate, endDate);
             return ResponseEntity.ok(stats);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
