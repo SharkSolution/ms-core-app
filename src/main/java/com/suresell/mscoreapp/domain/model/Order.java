@@ -43,6 +43,8 @@ public class Order {
     private Boolean synced = false;
     @Column(name = "uuid_id")
     private java.util.UUID uuidId;
+    @Column(name = "waiter_id")
+    private Long waiterId;
     @Column(name = "is_printed")
     private Boolean isPrinted;
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)  
