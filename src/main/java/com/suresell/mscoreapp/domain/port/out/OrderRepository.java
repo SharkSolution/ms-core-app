@@ -11,10 +11,4 @@ public interface OrderRepository {
     Page<Order> findAll(Specification<Order> spec, Pageable pageable);
     Optional<Order> findById(Long id);
     Order save(Order order);
-    java.util.List<Object[]> sumTotalsByPaymentMethodAndWaiter(
-            String waiterId,
-            com.suresell.mscoreapp.domain.model.OrderStatus status,
-            java.time.LocalDateTime startTime,
-            java.time.LocalDateTime endTime
-    );
 }

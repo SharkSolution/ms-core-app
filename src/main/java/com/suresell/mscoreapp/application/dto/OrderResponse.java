@@ -20,5 +20,4 @@ public class OrderResponse {
     private OrderStatus status;
     private String paymentMethod;
     private List<OrderItemDto> items;
-    private String waiterName;
 }
