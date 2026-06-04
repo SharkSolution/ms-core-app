@@ -45,10 +45,6 @@ public class Order {
     private java.util.UUID uuidId;
     @Column(name = "is_printed")
     private Boolean isPrinted;
-    @Column(name = "waiter_id")
-    private String waiterId;
-    @Column(name = "waiter_name")
-    private String waiterName;
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)  
     private List<OrderItem> items;
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)

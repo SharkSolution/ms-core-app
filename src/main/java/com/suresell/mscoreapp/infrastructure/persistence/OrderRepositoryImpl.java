@@ -31,14 +31,4 @@ public class OrderRepositoryImpl implements OrderRepository {
     public Order save(Order order) {
         return jpaRepository.save(order);
     }
-
-    @Override
-    public java.util.List<Object[]> sumTotalsByPaymentMethodAndWaiter(
-            String waiterId,
-            com.suresell.mscoreapp.domain.model.OrderStatus status,
-            java.time.LocalDateTime startTime,
-            java.time.LocalDateTime endTime
-    ) {
-        return jpaRepository.sumTotalsByPaymentMethodAndWaiter(waiterId, status, startTime, endTime);
-    }
 }
