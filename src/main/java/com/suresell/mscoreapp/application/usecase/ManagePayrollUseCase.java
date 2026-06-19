@@ -45,8 +45,9 @@ public class ManagePayrollUseCase {
         
         BigDecimal commissions = entity.getCommissions() != null ? entity.getCommissions() : BigDecimal.ZERO;
         BigDecimal bonuses = entity.getBonuses() != null ? entity.getBonuses() : BigDecimal.ZERO;
-        
-        return base.add(commissions).add(bonuses);
+        BigDecimal overtime = entity.getOvertimeValue() != null ? entity.getOvertimeValue() : BigDecimal.ZERO;
+
+        return base.add(commissions).add(bonuses).add(overtime);
     }
 
     public List<PayrollDto> getPayrolls(PayrollStatus status, LocalDate startDate, LocalDate endDate) {

@@ -21,6 +21,7 @@ public class PayrollDto {
     private Double workedDays;
     private BigDecimal commissions;
     private BigDecimal bonuses;
+    private BigDecimal overtimeValue;
     private BigDecimal totalValue;
     private String notes;
     private PayrollStatus status;

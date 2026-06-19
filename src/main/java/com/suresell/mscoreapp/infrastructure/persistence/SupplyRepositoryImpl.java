@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class SupplyRepositoryImpl implements ISupplyRepository {
@@ -38,6 +39,25 @@ public class SupplyRepositoryImpl implements ISupplyRepository {
     public void updateStock(Long supplyId, BigDecimal quantity) {
         supplyJpaRepository.findById(supplyId).ifPresent(supply -> {
             supply.setStock(supply.getStock().add(quantity));
+            supplyJpaRepository.save(supply);
+        });
+    }
+
+    @Override
+    public Optional<Supply> findById(Long id) {
+        return supplyJpaRepository.findById(id);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        supplyJpaRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void setStock(Long supplyId, BigDecimal newStock) {
+        supplyJpaRepository.findById(supplyId).ifPresent(supply -> {
+            supply.setStock(newStock);
             supplyJpaRepository.save(supply);
         });
     }

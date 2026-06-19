@@ -21,6 +21,7 @@ public class PayrollMapper {
         entity.setWorkedDays(request.getWorkedDays());
         entity.setCommissions(request.getCommissions());
         entity.setBonuses(request.getBonuses());
+        entity.setOvertimeValue(request.getOvertimeValue());
         entity.setNotes(request.getNotes());
         entity.setPaymentDate(request.getPaymentDate());
         entity.setCreatedBy(request.getCreatedBy());
@@ -43,6 +44,7 @@ public class PayrollMapper {
         dto.setWorkedDays(entity.getWorkedDays());
         dto.setCommissions(entity.getCommissions());
         dto.setBonuses(entity.getBonuses());
+        dto.setOvertimeValue(entity.getOvertimeValue());
         dto.setTotalValue(entity.getTotalValue());
         dto.setNotes(entity.getNotes());
         dto.setStatus(entity.getStatus());

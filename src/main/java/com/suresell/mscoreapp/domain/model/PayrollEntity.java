@@ -54,6 +54,10 @@ public class PayrollEntity {
     @Column(precision = 12, scale = 2)
     private BigDecimal bonuses;
 
+    // Horas extras (monto) — separado del salario base y de bonos/comisiones (1.1).
+    @Column(name = "overtime_value", precision = 12, scale = 2)
+    private BigDecimal overtimeValue;
+
     @Column(name = "total_value", precision = 12, scale = 2, nullable = false)
     private BigDecimal totalValue;
 

@@ -28,9 +28,11 @@ public class PayrollCreateRequest {
     private Double workedDays;
     
     private BigDecimal commissions;
-    
+
     private BigDecimal bonuses;
-    
+
+    private BigDecimal overtimeValue;
+
     private String notes;
     
     private LocalDate paymentDate;

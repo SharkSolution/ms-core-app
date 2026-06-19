@@ -61,4 +61,34 @@ public class SupplyController {
                     .body(Map.of("error", e.getMessage()));
         }
     }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Editar insumo", description = "Actualiza un insumo existente (nombre, precio, stock, mínimo o categoría)")
+    public ResponseEntity<?> updateSupply(@PathVariable("id") Long id, @RequestBody CreateSupplyDto dto) {
+        try {
+            supplyService.updateSupply(id, dto);
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("error", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Eliminar insumo", description = "Elimina un insumo del maestro")
+    public ResponseEntity<?> deleteSupply(@PathVariable("id") Long id) {
+        try {
+            supplyService.deleteSupply(id);
+            return ResponseEntity.noContent().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("error", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", e.getMessage()));
+        }
+    }
 }
