@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -40,6 +41,14 @@ public class ManageWaiterUseCase {
         WaiterEntity entity = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Mesero no encontrado: " + id));
         entity.setActive(active);
+        return mapper.toDto(repository.save(entity));
+    }
+
+    @Transactional
+    public WaiterDto updateWaiterGoal(Long id, BigDecimal dailySaleGoal) {
+        WaiterEntity entity = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Mesero no encontrado: " + id));
+        entity.setDailySaleGoal(dailySaleGoal);
         return mapper.toDto(repository.save(entity));
     }
 

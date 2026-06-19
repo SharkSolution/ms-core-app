@@ -45,6 +45,13 @@ public class WaiterController {
         return manageWaiterUseCase.updateWaiterStatus(id, active);
     }
 
+    @PatchMapping("/{id}/goal")
+    @Operation(summary = "Configurar la meta de venta diaria del mesero")
+    public WaiterDto updateGoal(@PathVariable Long id,
+                                @RequestParam(required = false) java.math.BigDecimal dailySaleGoal) {
+        return manageWaiterUseCase.updateWaiterGoal(id, dailySaleGoal);
+    }
+
     @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar un mesero definitivamente")
     public ResponseEntity<Void> deleteWaiter(@PathVariable Long id) {
