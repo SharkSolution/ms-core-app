@@ -12,6 +12,7 @@ public class PayrollMapper {
         if (request == null) return null;
         
         PayrollEntity entity = new PayrollEntity();
+        entity.setEmployeeId(request.getEmployeeId());
         entity.setEmployeeName(request.getEmployeeName());
         entity.setDocumentId(request.getDocumentId());
         entity.setPhone(request.getPhone());
@@ -35,6 +36,7 @@ public class PayrollMapper {
         PayrollDto dto = new PayrollDto();
         dto.setId(entity.getId());
         dto.setCode(entity.getCode());
+        dto.setEmployeeId(entity.getEmployeeId());
         dto.setEmployeeName(entity.getEmployeeName());
         dto.setDocumentId(entity.getDocumentId());
         dto.setPhone(entity.getPhone());

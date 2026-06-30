@@ -35,14 +35,27 @@ public class ManagePayrollUseCase {
     }
 
     private BigDecimal calculateTotalValue(PayrollEntity entity) {
-        BigDecimal base = BigDecimal.ZERO;
-        
-        if (entity.getPaymentMode() == PaymentMode.PER_SHIFT) {
-            BigDecimal valuePerDay = entity.getValuePerDay() != null ? entity.getValuePerDay() : BigDecimal.ZERO;
-            BigDecimal workedDays = entity.getWorkedDays() != null ? BigDecimal.valueOf(entity.getWorkedDays()) : BigDecimal.ZERO;
-            base = valuePerDay.multiply(workedDays);
+        BigDecimal valuePerDay = entity.getValuePerDay() != null ? entity.getValuePerDay() : BigDecimal.ZERO;
+        BigDecimal workedDays = entity.getWorkedDays() != null ? BigDecimal.valueOf(entity.getWorkedDays()) : BigDecimal.ZERO;
+        PaymentMode mode = entity.getPaymentMode() != null ? entity.getPaymentMode() : PaymentMode.PER_SHIFT;
+
+        // Base segun la modalidad de pago:
+        //  - PER_SHIFT  -> valor por turno x turnos trabajados
+        //  - PER_HOUR   -> valor por hora  x horas trabajadas (se reusa workedDays)
+        //  - WITH_BENEFITS / WITHOUT_BENEFITS -> salario mensual fijo (no se multiplica)
+        BigDecimal base;
+        switch (mode) {
+            case PER_SHIFT:
+            case PER_HOUR:
+                base = valuePerDay.multiply(workedDays);
+                break;
+            case WITH_BENEFITS:
+            case WITHOUT_BENEFITS:
+            default:
+                base = valuePerDay;
+                break;
         }
-        
+
         BigDecimal commissions = entity.getCommissions() != null ? entity.getCommissions() : BigDecimal.ZERO;
         BigDecimal bonuses = entity.getBonuses() != null ? entity.getBonuses() : BigDecimal.ZERO;
         BigDecimal overtime = entity.getOvertimeValue() != null ? entity.getOvertimeValue() : BigDecimal.ZERO;

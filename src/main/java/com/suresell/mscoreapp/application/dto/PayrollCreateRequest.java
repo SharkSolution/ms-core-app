@@ -10,6 +10,8 @@ import java.time.LocalDate;
 
 @Data
 public class PayrollCreateRequest {
+    private Long employeeId;
+
     @NotBlank
     private String employeeName;
     

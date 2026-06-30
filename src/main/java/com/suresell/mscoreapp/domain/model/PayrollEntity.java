@@ -26,6 +26,11 @@ public class PayrollEntity {
     @Column(nullable = false, unique = true)
     private String code;
 
+    // Vinculo opcional a la maestra de empleados (employees.id). Null para nominas
+    // capturadas manualmente sin seleccionar un empleado registrado.
+    @Column(name = "employee_id")
+    private Long employeeId;
+
     @Column(name = "employee_name", nullable = false)
     private String employeeName;
 

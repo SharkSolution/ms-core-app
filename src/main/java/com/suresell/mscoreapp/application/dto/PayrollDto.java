@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class PayrollDto {
     private String id;
     private String code;
+    private Long employeeId;
     private String employeeName;
     private String documentId;
     private String phone;
