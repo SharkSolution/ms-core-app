@@ -14,4 +14,5 @@ public class WaiterDto {
     private String name;
     private Boolean active;
     private BigDecimal dailySaleGoal;
+    private BigDecimal commissionPercentage;
 }

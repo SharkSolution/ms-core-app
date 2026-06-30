@@ -53,6 +53,14 @@ public class ManageWaiterUseCase {
     }
 
     @Transactional
+    public WaiterDto updateWaiterCommission(Long id, BigDecimal commissionPercentage) {
+        WaiterEntity entity = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Mesero no encontrado: " + id));
+        entity.setCommissionPercentage(commissionPercentage);
+        return mapper.toDto(repository.save(entity));
+    }
+
+    @Transactional
     public void removeWaiter(Long id) {
         repository.deleteById(id);
     }

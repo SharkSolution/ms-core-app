@@ -52,6 +52,13 @@ public class WaiterController {
         return manageWaiterUseCase.updateWaiterGoal(id, dailySaleGoal);
     }
 
+    @PatchMapping("/{id}/commission")
+    @Operation(summary = "Configurar el % de comisión negociado del mesero")
+    public WaiterDto updateCommission(@PathVariable Long id,
+                                      @RequestParam(required = false) java.math.BigDecimal commissionPercentage) {
+        return manageWaiterUseCase.updateWaiterCommission(id, commissionPercentage);
+    }
+
     @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar un mesero definitivamente")
     public ResponseEntity<Void> deleteWaiter(@PathVariable Long id) {

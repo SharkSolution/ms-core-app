@@ -29,4 +29,8 @@ public class WaiterEntity {
     // Meta de venta diaria del mesero, configurable desde el Admin (3.1). Nullable.
     @Column(name = "daily_sale_goal", precision = 12, scale = 2)
     private BigDecimal dailySaleGoal;
+
+    // % de comisión negociado con el mesero (ej. 5.00 = 5%). Configurable desde el Admin. Nullable.
+    @Column(name = "commission_percentage", precision = 5, scale = 2)
+    private BigDecimal commissionPercentage;
 }
