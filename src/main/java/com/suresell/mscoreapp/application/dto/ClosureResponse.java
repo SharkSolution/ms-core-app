@@ -39,4 +39,9 @@ public class ClosureResponse {
     
     private String notes;
     private BigDecimal baseBalanceForNextDay;
+
+    // Gastos menores + su detalle JSON, y la venta pura del día (sin base)
+    private BigDecimal pettyCashExpenses;
+    private String pettyCashExpensesAudit;
+    private BigDecimal salesOfDay;
 }

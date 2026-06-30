@@ -91,6 +91,18 @@ public class DailyClosureEntity {
     @Column(name = "cash_count_audit", columnDefinition = "TEXT")
     private String cashCountAudit;
 
+    // Gastos menores sacados de la caja (sincronizado desde el POS)
+    @Column(name = "petty_cash_expenses", precision = 38, scale = 2)
+    private BigDecimal pettyCashExpenses;
+
+    // Detalle JSON de los gastos menores: [{ "concept": ..., "amount": ... }]
+    @Column(name = "petty_cash_expenses_audit", columnDefinition = "TEXT")
+    private String pettyCashExpensesAudit;
+
+    // Venta pura del día (sin la base anterior). Puede venir nula en cierres antiguos.
+    @Column(name = "sales_of_day", precision = 38, scale = 2)
+    private BigDecimal salesOfDay;
+
     @PrePersist
     public void prePersist() {
         if (this.id == null) {
