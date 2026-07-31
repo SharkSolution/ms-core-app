@@ -7,10 +7,16 @@ spring:
   application:
     name: ms-core-app
 
+  # La conexion NO se define aca. Se toma del entorno:
+  #   SPRING_DATASOURCE_URL, SPRING_DATASOURCE_USERNAME, SPRING_DATASOURCE_PASSWORD
+  #
+  # Antes estaban escritas en este archivo, o sea que cualquiera con acceso al
+  # repositorio tenia la base del negocio. Ademas habian quedado muertas:
+  # apuntaban a un proyecto de Supabase que ya no existe.
+  #
+  # Debe ser el pooler en modo *session* (puerto 5432). Con el 6543 (transaction)
+  # se pierde `app.tenant_id` entre consultas y Row-Level Security deja de aislar.
   datasource:
-    url: jdbc:postgresql://aws-1-us-east-1.pooler.supabase.com:6543/postgres?prepareThreshold=0
-    username: postgres.iwlbtkqszbkugfxdpzyk
-    password: w9Rz3wcIeT3i184t
     driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 4
