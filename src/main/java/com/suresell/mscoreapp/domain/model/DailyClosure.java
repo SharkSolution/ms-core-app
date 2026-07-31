@@ -43,9 +43,6 @@ public class DailyClosure {
     @Column(name = "total_expected_card", precision = 15, scale = 2)
     private BigDecimal totalExpectedCard;
 
-    @Column(name = "total_expected_nequi", precision = 15, scale = 2)
-    private BigDecimal totalExpectedNequi;
-
     @Column(name = "total_expected_qr", precision = 15, scale = 2)
     private BigDecimal totalExpectedQr;
 
@@ -54,9 +51,6 @@ public class DailyClosure {
 
     @Column(name = "total_counted_card", precision = 15, scale = 2)
     private BigDecimal totalCountedCard;
-
-    @Column(name = "total_counted_nequi", precision = 15, scale = 2)
-    private BigDecimal totalCountedNequi;
 
     @Column(name = "total_counted_qr", precision = 15, scale = 2)
     private BigDecimal totalCountedQr;
@@ -75,9 +69,6 @@ public class DailyClosure {
 
     @Column(name = "difference_card", precision = 15, scale = 2)
     private BigDecimal differenceCard;
-
-    @Column(name = "difference_nequi", precision = 15, scale = 2)
-    private BigDecimal differenceNequi;
 
     @Column(name = "difference_qr", precision = 15, scale = 2)
     private BigDecimal differenceQr;

@@ -51,3 +51,10 @@ logging:
   level:
     root: INFO
     com.suresell.mscoreapp: DEBUG
+
+# JWT del panel: el MISMO que emite ms-order-product al iniciar sesion, para no
+# mantener dos sistemas de credenciales. Sin la variable el servicio NO arranca:
+# es preferible a que quede abierto a internet, que es como estuvo hasta ahora.
+security:
+  jwt:
+    secret: ${JWT_SECRET:}
