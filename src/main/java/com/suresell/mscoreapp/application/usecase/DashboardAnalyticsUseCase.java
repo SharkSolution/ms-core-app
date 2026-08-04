@@ -34,8 +34,26 @@ public class DashboardAnalyticsUseCase {
         return analyticsRepository.getTopProducts(start, end, PageRequest.of(0, limit));
     }
 
+    /**
+     * Ingresos por medio de pago, con los pagos mixtos ya repartidos.
+     *
+     * <p>Cada porción de un pago mixto cuenta como una transacción de su medio:
+     * si algo entró por QR, el contador de QR sube en 1. Ver la consulta en
+     * {@code AnalyticsRepository#getPaymentMethodDistribution}.
+     */
     public List<PaymentMethodDistDto> getPaymentMethods(LocalDate startDate, LocalDate endDate) {
-        return analyticsRepository.getPaymentMethodDistribution(startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX));
+        return repartoPorMedioDePago(startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX));
+    }
+
+    /**
+     * Traduce la proyección de la consulta nativa al DTO. Lo usan el dashboard y
+     * la pantalla de analítica: si cada uno hiciera su propia conversión, uno de
+     * los dos terminaría repartiendo los pagos mixtos distinto que el otro.
+     */
+    private List<PaymentMethodDistDto> repartoPorMedioDePago(LocalDateTime start, LocalDateTime end) {
+        return analyticsRepository.getPaymentMethodDistribution(start, end).stream()
+                .map(p -> new PaymentMethodDistDto(p.getMethod(), p.getTrxCount(), p.getTotalMoney()))
+                .toList();
     }
 
     public List<CashPerformanceDto> getCashPerformance(LocalDate startDate, LocalDate endDate) {
@@ -65,7 +83,7 @@ public class DashboardAnalyticsUseCase {
                     : BigDecimal.ZERO;
     
             List<TopProductDto> topProducts = analyticsRepository.getTopProducts(start, end, PageRequest.of(0, 5));
-            List<PaymentMethodDistDto> paymentMethods = analyticsRepository.getPaymentMethodDistribution(start, end);
+            List<PaymentMethodDistDto> paymentMethods = repartoPorMedioDePago(start, end);
     
             return new DashboardResponse(
                     todaySales,
