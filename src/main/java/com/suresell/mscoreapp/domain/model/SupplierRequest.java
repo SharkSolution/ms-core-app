@@ -21,7 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "supplier_requests")
-public class SupplierRequest {
+public class SupplierRequest extends EntidadDeNegocio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

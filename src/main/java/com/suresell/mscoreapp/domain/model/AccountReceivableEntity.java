@@ -23,7 +23,7 @@ import java.util.List;
                 @Index(name = "idx_account_status", columnList = "status"),
                 @Index(name = "idx_account_last_transaction", columnList = "last_transaction_date")
         })
-public class AccountReceivableEntity {
+public class AccountReceivableEntity extends EntidadDeNegocio {
 
     @Id
     @Column(length = 36)

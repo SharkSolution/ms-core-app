@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
                 @Index(name = "idx_transaction_date", columnList = "transaction_date"),
                 @Index(name = "idx_transaction_type", columnList = "type")
         })
-public class DebtTransactionEntity {
+public class DebtTransactionEntity extends EntidadDeNegocio {
 
     @Id
     @Column(length = 36)

@@ -3,16 +3,19 @@ package com.suresell.mscoreapp.domain.model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Data
+// tenant_id no entra en equals: todas las filas de una sesion comparten negocio.
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "expense_categories")
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExpenseCategoryEntity {
+public class ExpenseCategoryEntity extends EntidadDeNegocio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

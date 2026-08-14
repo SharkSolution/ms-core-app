@@ -3,6 +3,7 @@ package com.suresell.mscoreapp.domain.model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
@@ -12,9 +13,11 @@ import java.util.List;
 @Entity
 @Table(name = "orders")  
 @Data
+// tenant_id no entra en equals: todas las filas de una sesion comparten negocio.
+@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Order {
+public class Order extends EntidadDeNegocio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)  
     @Column(name = "id_order")

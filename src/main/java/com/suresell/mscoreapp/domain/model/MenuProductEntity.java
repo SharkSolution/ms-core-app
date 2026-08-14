@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "menu_products")
-public class MenuProductEntity {
+public class MenuProductEntity extends EntidadDeNegocio {
 
     @Id
     @Column(name = "id_product")

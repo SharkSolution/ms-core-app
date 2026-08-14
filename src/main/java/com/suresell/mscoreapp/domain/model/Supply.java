@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Table(name = "supplies")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Supply {
+public class Supply extends EntidadDeNegocio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

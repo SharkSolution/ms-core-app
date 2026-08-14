@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "order_edit_history")
-public class OrderEditHistoryEntity {
+public class OrderEditHistoryEntity extends EntidadDeNegocio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

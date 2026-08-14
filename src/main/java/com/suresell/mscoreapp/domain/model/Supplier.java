@@ -13,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "suppliers")
-public class Supplier {
+public class Supplier extends EntidadDeNegocio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

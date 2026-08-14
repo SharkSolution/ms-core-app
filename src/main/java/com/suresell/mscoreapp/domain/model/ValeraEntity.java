@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
                 @Index(name = "idx_valera_expiration", columnList = "expiration_date"),
                 @Index(name = "idx_valera_type", columnList = "type")
         })
-public class ValeraEntity {
+public class ValeraEntity extends EntidadDeNegocio {
 
     @Id
     @Column(length = 36)

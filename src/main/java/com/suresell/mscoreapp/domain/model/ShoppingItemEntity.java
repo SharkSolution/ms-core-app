@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "shopping_items")
-public class ShoppingItemEntity {
+public class ShoppingItemEntity extends EntidadDeNegocio {
     @Id
     private String id;
 

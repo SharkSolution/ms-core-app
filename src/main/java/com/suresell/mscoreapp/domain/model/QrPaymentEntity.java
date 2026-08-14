@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Table(name = "qr_payments")
 @Getter
 @Setter
-public class QrPaymentEntity {
+public class QrPaymentEntity extends EntidadDeNegocio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

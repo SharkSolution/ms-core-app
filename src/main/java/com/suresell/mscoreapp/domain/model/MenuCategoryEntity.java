@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "menu_categories")
-public class MenuCategoryEntity {
+public class MenuCategoryEntity extends EntidadDeNegocio {
 
     @Id
     @Column(name = "id_category")

@@ -18,7 +18,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "daily_closures")
-public class DailyClosureEntity {
+public class DailyClosureEntity extends EntidadDeNegocio {
 
     @Id
     @Column(columnDefinition = "uuid")

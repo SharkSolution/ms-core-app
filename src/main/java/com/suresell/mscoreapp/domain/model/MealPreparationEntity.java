@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
                 @Index(name = "idx_meal_prep_date", columnList = "preparation_date"),
                 @Index(name = "idx_meal_prep_week", columnList = "preparation_date, day_of_week")
         })
-public class MealPreparationEntity {
+public class MealPreparationEntity extends EntidadDeNegocio {
 
     @Id
     @Column(length = 36)

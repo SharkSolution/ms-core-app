@@ -4,6 +4,7 @@ import com.suresell.mscoreapp.shared.enums.ExpenseStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
@@ -13,10 +14,12 @@ import java.util.UUID;
 
 @Entity
 @Data
+// tenant_id no entra en equals: todas las filas de una sesion comparten negocio.
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "expenses")
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExpenseEntity {
+public class ExpenseEntity extends EntidadDeNegocio {
 
     @Id
     @Column(length = 36)

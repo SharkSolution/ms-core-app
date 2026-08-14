@@ -7,8 +7,9 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(exclude = "order")
-public class OrderDeliveryTracking {
+// tenant_id no entra en equals: todas las filas de una sesion comparten negocio.
+@EqualsAndHashCode(exclude = "order", callSuper = false)
+public class OrderDeliveryTracking extends EntidadDeNegocio {
     @Id
     @Column(name = "order_id")
     private Long orderId;

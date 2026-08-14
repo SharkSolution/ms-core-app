@@ -51,6 +51,13 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // Postgres de verdad para las pruebas. Este servicio corre con
+    // ddl-auto: none contra una base compartida con RLS, asi que H2 o un mock
+    // no prueban nada de lo que se rompe: politicas, defaults y permisos.
+    // Sin esto no habia forma de ver el 500 al crear meseros hasta produccion.
+    testImplementation 'org.testcontainers:junit-jupiter:1.20.4'
+    testImplementation 'org.testcontainers:postgresql:1.20.4'
 }
 
 tasks.named('test') {
