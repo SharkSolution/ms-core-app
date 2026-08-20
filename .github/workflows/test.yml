@@ -27,6 +27,36 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
+    # Postgres EFÍMERO, solo para esta corrida. Existe para recuperar
+    # `stockTest`, la prueba de humo que comprueba que el contexto de Spring
+    # levanta entero y que se omitía en CI por no haber base
+    # (`stockTest.java:24-28`, @EnabledIfEnvironmentVariable).
+    #
+    # Esa prueba vale justamente lo que costó descubrir: el arranque de este
+    # servicio depende de piezas que solo fallan al levantar el contexto —el
+    # validador del JWT_SECRET, el envoltorio del DataSource y, desde el filtro
+    # por negocio, el resolvedor de multi-tenancy de Hibernate—. Ese último rompió
+    # el arranque dos veces mientras se implementaba y ningún otro test lo
+    # detectaba.
+    #
+    # ⚠️ NUNCA apuntar esta CI a una base real. Este contenedor nace y muere con
+    # el job.
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: core_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres_solo_para_ci
+        ports:
+          - 5432:5432
+        # Sin esto el job puede arrancar antes de que Postgres acepte conexiones.
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: Descargar el código
         uses: actions/checkout@v4
@@ -40,7 +70,25 @@ jobs:
       - name: Preparar Gradle (con caché)
         uses: gradle/actions/setup-gradle@v4
 
+      # Estas cuatro variables son las que hacen que `stockTest` deje de
+      # omitirse. Verificado en local contra un postgres:16-alpine vacío: el
+      # test corre (`skipped="0"`) y pasa.
+      #
+      # NO HACE FALTA SEMBRAR EL ESQUEMA. Con `ddl-auto: none`
+      # (`application.yml:29`) Hibernate no valida ni crea nada al arrancar, y
+      # `contextLoads()` no consulta ninguna tabla: solo comprueba que todos los
+      # beans se cablean. Una base vacía basta. Ver el commit para por qué NO se
+      # reutilizan las migraciones de ms-order-product-mt.
+      #
+      # JWT_SECRET es obligatorio o el servicio no arranca a propósito
+      # (`JwtTenantFilter.java:38-42`). El valor de aquí es de juguete y solo
+      # existe dentro del job; no tiene nada que ver con el de producción.
       - name: Correr los tests
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/core_test
+          SPRING_DATASOURCE_USERNAME: postgres
+          SPRING_DATASOURCE_PASSWORD: postgres_solo_para_ci
+          JWT_SECRET: secreto-de-juguete-solo-para-ci-min-32-bytes
         run: ./gradlew test --no-daemon
 
       - name: Publicar el informe de tests
