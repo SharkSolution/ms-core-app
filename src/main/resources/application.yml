@@ -38,6 +38,22 @@ spring:
     properties:
       hibernate:
         format_sql: false
+        # Defensa en profundidad del aislamiento entre negocios.
+        #
+        # Con `@TenantId` en EntidadDeNegocio, Hibernate anade
+        # `AND tenant_id = ?` al SQL de las 25 entidades. El valor lo da este
+        # resolvedor, que lo lee de TenantContext.
+        #
+        # Se registra por propiedad y no con un HibernatePropertiesCustomizer:
+        # el resolvedor no necesita nada de Spring —solo lee un ThreadLocal— y
+        # asi Hibernate lo instancia el mismo. La version con customizer no
+        # llegaba a aplicarse y el arranque fallaba con
+        # "SessionFactory configured for multi-tenancy, but no tenant identifier
+        # specified".
+        #
+        # SIN ESTA LINEA EL SERVICIO NO ARRANCA. No es opcional ni ajustable:
+        # es lo que hace que @TenantId funcione.
+        tenant_identifier_resolver: com.suresell.mscoreapp.infrastructure.multitenant.ResolvedorDeNegocioParaHibernate
 
 springdoc:
   swagger-ui:
