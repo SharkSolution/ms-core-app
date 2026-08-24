@@ -7,6 +7,7 @@ import com.suresell.mscoreapp.domain.model.SupplyCategory;
 import com.suresell.mscoreapp.domain.port.out.ISupplyCategoryRepository;
 import com.suresell.mscoreapp.domain.port.out.ShoppingListRepository;
 import com.suresell.mscoreapp.shared.enums.ShoppingItemStatus;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class ManageShoppingListUseCase {
 
@@ -86,15 +88,42 @@ public class ManageShoppingListUseCase {
         }
     }
 
+    /**
+     * Actualiza la cantidad de un item de la lista de compras.
+     *
+     * <h3>Por que ya no se traga el fallo</h3>
+     *
+     * La version anterior era:
+     *
+     * <pre>
+     * try { repository.save(item); }
+     * catch (Exception e) { System.out.println(e.getMessage()); }
+     * </pre>
+     *
+     * Un metodo {@code void} que no relanza: si el guardado fallaba, <b>quien
+     * llamo creia que se habia guardado</b> y el inventario quedaba con una
+     * cantidad distinta de la que el usuario vio confirmada. Y con
+     * {@code System.out} en vez de un logger, en el proveedor de despliegue
+     * podia no aparecer ni el mensaje.
+     *
+     * <p>Era el fallback mas silencioso del inventario de
+     * `discovery/FALLBACK-SILENCIOSO.md` (I1) y el mas barato de arreglar: el
+     * fallo se propaga, que es lo unico que hace que el llamador —y el usuario—
+     * se enteren.
+     */
     public void updateItemQuantity(String itemId, BigDecimal quantity) {
         ShoppingItem item = repository.findById(itemId)
                 .orElseThrow(() -> new IllegalArgumentException("Item not found"));
 
         item.updateQuantity(quantity);
-        try{
+        try {
             repository.save(item);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            // Se registra Y se relanza. El log sirve para diagnosticar; lo que
+            // impide el dato equivocado es que el llamador se entere.
+            log.error("Fallo al guardar la cantidad del item {} de la lista de compras", itemId, e);
+            throw new IllegalStateException(
+                    "No se pudo guardar la cantidad del item " + itemId, e);
         }
     }
 
