@@ -27,10 +27,17 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
-    show-sql: true
+    # Apagados en produccion: este servicio maneja nomina, cartera y datos de
+    # clientes, y con show-sql cada consulta contra employees, payrolls o
+    # accounts_receivable termina en el log del proveedor. No filtra los valores
+    # —Hibernate imprime los parametros como '?'— pero si publica el esquema
+    # entero y multiplica el volumen de logs sin que nadie los lea.
+    # El resto de los servicios ya los tenian en false; este era el unico
+    # que no.
+    show-sql: false
     properties:
       hibernate:
-        format_sql: true
+        format_sql: false
 
 springdoc:
   swagger-ui:
@@ -56,7 +63,12 @@ management:
 logging:
   level:
     root: INFO
-    com.suresell.mscoreapp: DEBUG
+    # INFO y no DEBUG: en produccion el nivel de depuracion de todo el paquete
+    # solo genera ruido que esconde lo que importa. Para diagnosticar algo
+    # puntual se sube por variable de entorno
+    # (LOGGING_LEVEL_COM_SURESELL_MSCOREAPP=DEBUG) y se vuelve a bajar, sin
+    # tocar el codigo.
+    com.suresell.mscoreapp: INFO
 
 # JWT del panel: el MISMO que emite ms-order-product al iniciar sesion, para no
 # mantener dos sistemas de credenciales. Sin la variable el servicio NO arranca:
