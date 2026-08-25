@@ -43,18 +43,45 @@ public class JwtTenantFilter extends OncePerRequestFilter {
         this.key = io.jsonwebtoken.security.Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
-    /** Rutas que no llevan tenant: salud y documentación. */
+    /**
+     * La ÚNICA ruta exenta: la sonda de salud.
+     *
+     * <p><b>Coincidencia exacta, no prefijo, y por una razón concreta.</b> La
+     * versión anterior eximía {@code /actuator} entero, más {@code /swagger-ui} y
+     * {@code /v3/api-docs}. Nunca llegó a aplicarse —ver {@link #esPublica}— así
+     * que el efecto real de arreglar la comparación habría sido abrir de golpe
+     * todo lo que colgara de {@code /actuator} en un servicio que maneja nómina,
+     * cartera y gastos. Hoy solo está expuesto {@code health}, pero eso es una
+     * línea de configuración que alguien puede cambiar sin pensar en este filtro.
+     *
+     * <p>Con coincidencia exacta, exponer un endpoint nuevo de actuator **no** lo
+     * hace público por accidente: hay que venir aquí a decidirlo.
+     *
+     * <p><b>Swagger y la especificación OpenAPI quedan fuera a propósito.</b>
+     * Llevan cerrados desde el 2026-07-30 sin que nadie lo echara en falta, y
+     * publicar el mapa completo de endpoints de este servicio en internet no
+     * tiene contrapartida: quien lo necesita para desarrollar lo tiene en local,
+     * donde este filtro exige un token de juguete y no un secreto de producción.
+     */
+    private static final String RUTA_DE_SALUD = "/actuator/health";
+
+    /**
+     * @param ruta debe venir de {@code getServletPath()}, NO de
+     *     {@code getRequestURI()}. Esa confusión es justo lo que este cambio
+     *     arregla: {@code getRequestURI()} incluye el context path, así que la
+     *     ruta real era {@code /api/core/actuator/health} y no empezaba por
+     *     {@code /actuator}. La exención no se cumplió ni una vez desde que se
+     *     escribió, y el health check quedó devolviendo 401 en los dos entornos.
+     */
     private static boolean esPublica(String ruta) {
-        return ruta.startsWith("/actuator")
-                || ruta.startsWith("/swagger-ui")
-                || ruta.startsWith("/v3/api-docs");
+        return RUTA_DE_SALUD.equals(ruta);
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
             throws ServletException, IOException {
 
-        if (esPublica(req.getRequestURI()) || "OPTIONS".equalsIgnoreCase(req.getMethod())) {
+        if (esPublica(req.getServletPath()) || "OPTIONS".equalsIgnoreCase(req.getMethod())) {
             chain.doFilter(req, res);
             return;
         }

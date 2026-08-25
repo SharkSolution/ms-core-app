@@ -60,9 +60,29 @@ class JwtTenantFilterTest {
         return token(SECRETO, Map.of("tenant_id", tenantId, "role", "ADMIN"), 60_000);
     }
 
+    /**
+     * El context path REAL de este servicio. No es decorativo.
+     *
+     * <p>Hasta el 2026-08-24 este helper construía la petición con
+     * {@code setRequestURI(ruta)} y nada más — o sea, con el context path vacío,
+     * una forma de petición que <b>en producción no ocurre nunca</b>. El filtro
+     * comparaba {@code getRequestURI()} contra {@code "/actuator"}, y en el test
+     * eso daba {@code "/actuator/health"} y coincidía. En producción daba
+     * {@code "/api/core/actuator/health"} y no coincidía jamás.
+     *
+     * <p><b>El test estuvo verde tres semanas mientras el health check devolvía
+     * 401 en los dos entornos.</b> No falló el filtro por falta de pruebas:
+     * falló porque la prueba reproducía una petición que no existe.
+     *
+     * <p>Por eso ahora se fijan las tres partes por separado, como hace Tomcat.
+     */
+    private static final String CONTEXTO = "/api/core";
+
     private static MockHttpServletRequest peticion(String ruta, String autorizacion) {
-        MockHttpServletRequest req = new MockHttpServletRequest("GET", ruta);
-        req.setRequestURI(ruta);
+        MockHttpServletRequest req = new MockHttpServletRequest("GET", CONTEXTO + ruta);
+        req.setContextPath(CONTEXTO);
+        req.setServletPath(ruta);
+        req.setRequestURI(CONTEXTO + ruta);
         if (autorizacion != null) {
             req.addHeader("Authorization", autorizacion);
         }
@@ -271,25 +291,86 @@ class JwtTenantFilterTest {
     class RutasPublicas {
 
         @Test
-        @DisplayName("salud y documentación pasan sin token")
-        void publicasPasan() throws Exception {
-            for (String ruta : new String[] {"/actuator/health", "/swagger-ui/index.html", "/v3/api-docs"}) {
+        @DisplayName("la sonda de salud pasa sin token, CON el context path de producción")
+        void saludPasa() throws Exception {
+            MockHttpServletResponse res = new MockHttpServletResponse();
+            MockFilterChain cadena = new MockFilterChain();
+
+            filtro.doFilter(peticion("/actuator/health", null), res, cadena);
+
+            assertThat(res.getStatus()).isEqualTo(200);
+            assertThat(cadena.getRequest()).as("tiene que llegar al endpoint").isNotNull();
+            assertThat(TenantContext.get()).as("la salud no fija negocio").isNull();
+        }
+
+        @Test
+        @DisplayName("el resto de actuator sigue cerrado: la exención NO se derrama")
+        void actuatorNoSeDerrama() throws Exception {
+            // El corazón de este arreglo. La versión anterior eximía /actuator
+            // ENTERO; si al corregir la comparación se hubiera dejado así, este
+            // servicio habría publicado en internet las variables de entorno y un
+            // volcado de memoria de la nómina y la cartera.
+            //
+            // Hoy solo `health` está expuesto en application.yml, así que estas
+            // rutas darían 404 aunque el filtro las dejara pasar. Eso es una
+            // coincidencia de configuración, no una defensa: `include` es una
+            // línea que alguien puede ampliar sin mirar este fichero.
+            for (String ruta : new String[] {
+                "/actuator/env", "/actuator/beans", "/actuator/configprops",
+                "/actuator/heapdump", "/actuator/loggers", "/actuator/threaddump",
+                "/actuator/metrics", "/actuator/mappings"
+            }) {
                 MockHttpServletResponse res = new MockHttpServletResponse();
                 MockFilterChain cadena = new MockFilterChain();
 
                 filtro.doFilter(peticion(ruta, null), res, cadena);
 
-                assertThat(res.getStatus()).as(ruta).isEqualTo(200);
-                assertThat(cadena.getRequest()).as(ruta).isNotNull();
-                assertThat(TenantContext.get()).as(ruta + " no debe fijar tenant").isNull();
+                assertThat(res.getStatus()).as(ruta).isEqualTo(401);
+                assertThat(cadena.getRequest()).as(ruta + " no puede llegar al endpoint").isNull();
+            }
+        }
+
+        @Test
+        @DisplayName("una ruta que EMPIEZA por la de salud tampoco pasa")
+        void prefijoDeSaludNoBasta() throws Exception {
+            // La exención es coincidencia exacta, no `startsWith`. Sin esto,
+            // `/actuator/healthcheck-interno` o `/actuator/health/../env` serían
+            // públicas por parecerse.
+            for (String ruta : new String[] {
+                "/actuator/health-detallado", "/actuator/healthz", "/actuator/health/db"
+            }) {
+                MockHttpServletResponse res = new MockHttpServletResponse();
+
+                filtro.doFilter(peticion(ruta, null), res, new MockFilterChain());
+
+                assertThat(res.getStatus()).as(ruta).isEqualTo(401);
+            }
+        }
+
+        @Test
+        @DisplayName("swagger y la especificación OpenAPI quedan cerradas")
+        void documentacionCerrada() throws Exception {
+            // Decisión consciente, no un olvido: llevan cerradas desde el
+            // 2026-07-30 por el mismo fallo y nadie las echó en falta. Publicar
+            // el mapa de endpoints de este servicio no tiene contrapartida.
+            for (String ruta : new String[] {
+                "/swagger-ui/index.html", "/swagger-ui.html", "/v3/api-docs"
+            }) {
+                MockHttpServletResponse res = new MockHttpServletResponse();
+
+                filtro.doFilter(peticion(ruta, null), res, new MockFilterChain());
+
+                assertThat(res.getStatus()).as(ruta).isEqualTo(401);
             }
         }
 
         @Test
         @DisplayName("el preflight CORS pasa sin token")
         void preflightPasa() throws Exception {
-            MockHttpServletRequest req = new MockHttpServletRequest("OPTIONS", "/expenses");
-            req.setRequestURI("/expenses");
+            MockHttpServletRequest req = new MockHttpServletRequest("OPTIONS", CONTEXTO + "/expenses");
+            req.setContextPath(CONTEXTO);
+            req.setServletPath("/expenses");
+            req.setRequestURI(CONTEXTO + "/expenses");
             MockFilterChain cadena = new MockFilterChain();
 
             filtro.doFilter(req, new MockHttpServletResponse(), cadena);
@@ -300,7 +381,6 @@ class JwtTenantFilterTest {
         @Test
         @DisplayName("una ruta de datos NUNCA es pública, aunque se parezca")
         void datosNoSonPublicos() throws Exception {
-            // Guarda contra un startsWith demasiado permisivo.
             for (String ruta : new String[] {"/expenses", "/payrolls", "/valeras", "/supplies"}) {
                 MockHttpServletResponse res = new MockHttpServletResponse();
 
